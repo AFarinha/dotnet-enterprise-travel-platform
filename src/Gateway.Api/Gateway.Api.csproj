@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Trips\Trips.Api\Trips.Api.csproj" />
+    <ProjectReference Include="..\Modules\Bookings\Bookings.Api\Bookings.Api.csproj" />
+    <ProjectReference Include="..\Modules\Payments\Payments.Api\Payments.Api.csproj" />
+    <ProjectReference Include="..\Modules\Documents\Documents.Api\Documents.Api.csproj" />
+    <ProjectReference Include="..\Modules\Administration\Administration.Api\Administration.Api.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.Observability\BuildingBlocks.Observability.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.Security\BuildingBlocks.Security.csproj" />
+  </ItemGroup>
+</Project>

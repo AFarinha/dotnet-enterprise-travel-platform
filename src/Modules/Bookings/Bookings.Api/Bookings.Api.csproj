@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Bookings.Application\Bookings.Application.csproj" />
+  </ItemGroup>
+</Project>

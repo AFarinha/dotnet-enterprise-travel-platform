@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Trips.Application\Trips.Application.csproj" />
+  </ItemGroup>
+</Project>
