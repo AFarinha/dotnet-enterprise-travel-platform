@@ -8,7 +8,7 @@ This repository is being built incrementally as a public portfolio project for S
 
 ## Current Phase
 
-**Phase 0 - Bootstrap da solucao**
+**Phase 1 - Trips Domain e API basica**
 
 Implemented:
 
@@ -17,15 +17,19 @@ Implemented:
 - Base source projects for Gateway, modules and building blocks.
 - Initial documentation structure under `docs/`.
 - ADR 0001 for the modular monolith decision.
-- Minimal Gateway API placeholder with `/` and `/health`.
+- Minimal Gateway API with `/`, `/health` and OpenAPI document at `/openapi/v1.json`.
+- Trips domain model with `Trip`, `Traveller`, destination and travel period.
+- Trips state transitions for `Draft`, `Planned` and `Cancelled`.
+- Trips application service and repository abstraction.
+- Trips EF Core infrastructure with PostgreSQL support and an in-memory local fallback.
+- Trips endpoints for create, get, list, add traveller, plan, cancel and timeline.
+- Trips unit tests for domain rules.
 
 Not implemented yet:
 
-- Business functionality.
-- Persistence.
 - Authentication and authorization.
-- Tests.
 - Docker and CI/CD.
+- Advanced API quality foundation, including FluentValidation and full ProblemDetails mapping.
 
 ## Target Stack
 
@@ -90,11 +94,68 @@ dotnet build
 dotnet test
 ```
 
-Phase 0 has no test projects yet, so `dotnet test` is expected to report no tests once the SDK is available.
+Phase 1 includes focused unit tests for Trips domain rules.
+
+## Running The API
+
+```powershell
+dotnet run --project src/Gateway.Api/Gateway.Api.csproj
+```
+
+By default the Trips module uses a lightweight in-memory repository so the first functional API can run without PostgreSQL. To use PostgreSQL through EF Core/Npgsql, set:
+
+```json
+{
+  "Trips": {
+    "DatabaseProvider": "PostgreSql"
+  },
+  "ConnectionStrings": {
+    "Trips": "Host=localhost;Port=5432;Database=travel_platform;Username=postgres;Password=postgres"
+  }
+}
+```
+
+## Example Requests
+
+Create a trip:
+
+```http
+POST /api/trips
+Content-Type: application/json
+
+{
+  "title": "Lisbon business trip",
+  "ownerUserId": "user-1",
+  "destinationCountryCode": "PT",
+  "destinationCity": "Lisbon",
+  "startsOn": "2026-06-01",
+  "endsOn": "2026-06-05"
+}
+```
+
+Add a traveller:
+
+```http
+POST /api/trips/{id}/travellers
+Content-Type: application/json
+
+{
+  "firstName": "Ana",
+  "lastName": "Silva",
+  "email": "ana@example.com",
+  "birthDate": "1990-01-15"
+}
+```
+
+Plan a trip:
+
+```http
+POST /api/trips/{id}/plan
+```
 
 ## Roadmap
 
-- Phase 1: Trips Domain and basic API.
+- Phase 1: Trips Domain and basic API. Done.
 - Phase 2: API quality foundation with ProblemDetails, validation, health checks, logging and correlation ID.
 - Phase 3: Security with JWT, roles and authorization policies.
 - Phase 4: Bookings module.
@@ -111,4 +172,7 @@ Phase 0 has no test projects yet, so `dotnet test` is expected to report no test
 
 ## Phase Notes
 
-See [docs/phase-0-bootstrap.md](docs/phase-0-bootstrap.md).
+See:
+
+- [docs/phase-0-bootstrap.md](docs/phase-0-bootstrap.md)
+- [docs/phase-1-trips.md](docs/phase-1-trips.md)
